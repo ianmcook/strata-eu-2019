@@ -59,3 +59,13 @@ This happens because `boardgames` is a _pointer_ to `games`, not a _copy_ of gam
 ```python
 boardgames = games.copy()
 ```
+But a better solution is to make this modification using the pandas DataFrame method `assign`, which returns a modified _copy_ of the DataFrame on which it is called:
+
+```python
+boardgames = games.assign(
+  name = lambda x: x.name.apply(
+    lambda y: 'Cluedo' if y == 'Clue' else y
+  )
+)
+```
+

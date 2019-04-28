@@ -20,12 +20,15 @@
 # task.
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Import the required modules
 import os, random, math
 import tensorflow as tf
 from IPython.display import Image, display
+
+
+# ## 1. Load data
 
 # Specify the unique labels (names of the chess pieces)
 chess_pieces = ['King', 'Queen', 'Rook', 'Bishop', 'Knight', 'Pawn']
@@ -53,6 +56,9 @@ for chess_piece in chess_pieces:
 for path, label in zip(x, y):
   print((path, label))
 
+
+# ## 2. Prepare data
+
 # Split the paths and labels into 80% training, 20% test
 train_frac = 0.8
 train_n = int(math.floor(train_frac * len(x)))
@@ -65,12 +71,9 @@ train_y = [y[i] for i in train_indices]
 test_x = [x[i] for i in test_indices]
 test_y = [y[i] for i in test_indices]
 
-
-# ## TensorFlow setup
-
-# Set constants for TensorFlow
+# TensorFlow processes records in batches. Set the
+# batch size:
 BATCH_SIZE = 100
-TRAIN_STEPS = 300
 
 # Define a function that reads an image from a file,
 # decodes it to numbers, and returns a two-element tuple 
@@ -97,7 +100,7 @@ def test_input_fn():
   return dataset
 
 
-# ## Specifying the model
+# ## 3. Specify model
 
 # Create a list with the feature column
 my_feature_columns = [
@@ -123,13 +126,24 @@ model = tf.estimator.DNNClassifier(
 )
 
 
-# ## Training and evaluating the model
+# ## 4. Train model
+
+# TensorFlow trains the model in multiple steps
+# (iterations). In each step, the model learns
+# from one batch of training data. You can specify
+# the number of training steps that TensorFlow should
+# perform before it stops the iterative training
+# process.
+TRAIN_STEPS = 300
 
 # Call the `train` method to train the model
 model.train(
   input_fn=train_input_fn,
   steps=TRAIN_STEPS
 )
+
+
+# ## 5. Evaluate model
 
 # Call the `evaluate` method to evaluate (test) the
 # trained model
@@ -141,7 +155,7 @@ eval_result = model.evaluate(
 print(eval_result)
 
 
-# ## Making predictions
+# ## 6. Make predictions
 
 # Use the trained model to generate predictions
 # on unlabeled images
@@ -195,13 +209,13 @@ for (prediction, image) in zip(predictions, pred_x):
 #    pieces from chess set A. The resulting trained 
 #    model is poor at generalizing to images of pieces
 #    from other chess sets. Modify the code in the
-#    **Preparation** section to train the model using
+#    **1. Load data** section to train the model using
 #    the images of pieces from all four sets (A, B, 
 #    C, and D). How does this affect the accuracy
 #    of the model on the test (evaluation) set?
 #
-# 2. In the **TensorFlow setup** section and the
-#    **Specifying the model** section, modify 
+# 2. In the sections *2. Prepare data*, 
+#    *3. Specify model*, and *4. Train model*, modify 
 #    `BATCH_SIZE`, `TRAIN_STEPS`, the number of
 #    hidden layers, and the number of nodes in the
 #    hidden layers to try to improve the accuracy of
@@ -211,7 +225,7 @@ for (prediction, image) in zip(predictions, pred_x):
 #    a better job of generating predictions on the
 #    unlabeled images?
 #
-# 4. Modify the code in the **Making predictions**
+# 4. Modify the code in the **6. Make predictions**
 #    section to use images from the `weird` directory
 #    instead of the `unknown` directory. How well
 #    does the model predict on these images?

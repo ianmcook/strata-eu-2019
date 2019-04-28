@@ -21,17 +21,23 @@
 # level of abstraction than with the base TensorFlow APIs.
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Import the required modules
 import pandas as pd
 import tensorflow as tf
+
+
+# ## 1. Load data
 
 # Load data representing one brand of chess set ("set A")
 chess = pd.read_csv('data/chess/one_chess_set.csv')
 
 # View the data
 chess
+
+
+# ## 2. Prepare data
 
 # Specify the unique labels (names of the chess pieces)
 chess_pieces = ['King', 'Queen', 'Rook', 'Bishop', 'Knight', 'Pawn']
@@ -46,15 +52,12 @@ test = chess.drop(train.index)
 train_x, train_y = train, train.pop('piece')
 test_x, test_y = test, test.pop('piece')
 
-
-# ## TensorFlow setup
-
-# Set constants for TensorFlow
+# TensorFlow processes records in batches. Set the
+# batch size:
 BATCH_SIZE = 100
-TRAIN_STEPS = 1000
 
 # Define input functions to supply data for training
-# and evaulating the model
+# and evaluating the model
 
 # The training input function
 # 1. Creates a dictionary of features and an array of
@@ -80,7 +83,7 @@ def test_input_fn():
   return dataset
 
 
-# ## Specifying the model
+# ## 3. Specify model
 
 # Create a list of the feature columns, by calling 
 # functions in the 
@@ -118,13 +121,24 @@ model = tf.estimator.DNNClassifier(
 # - Use the trained model to make predictions
 
 
-# ## Training and evaluating the model
+# ## 4. Train model
+
+# TensorFlow trains the model in multiple steps
+# (iterations). In each step, the model learns
+# from one batch of training data. You can specify
+# the number of training steps that TensorFlow should
+# perform before it stops the iterative training
+# process.
+TRAIN_STEPS = 1000
 
 # Call the `train` method to train the model
 model.train(
   input_fn=train_input_fn,
   steps=TRAIN_STEPS
 )
+
+
+# ## 5. Evaluate model
 
 # Call the `evaluate` method to evaluate (test) the
 # trained model
@@ -136,7 +150,7 @@ eval_result = model.evaluate(
 print(eval_result)
 
 
-# ## Making predictions
+# ## 6. Make predictions
 
 # See what predictions the model generates for six
 # unlabeled chess pieces from "set A" whose features
@@ -192,14 +206,14 @@ for (prediction, expected) in zip(predictions, expected_y):
 
 # 1. This code trains the model using measurements of
 #    pieces from just one brand of chess set ("set A").
-#    In the **Preparation** section, modify the code
+#    In the **1. Load data** section, modify the code
 #    to load data with measurements from four different
 #    brands of chess sets (A, B, C, and D). This data
 #    is in the file `four_chess_sets.csv`. How does 
 #    this affect the accuracy of the model on the test 
 #    (evaluation) set?
 #
-# 2. In the **Specifying the model** section, modify
+# 2. In the **3. Specify model** section, modify
 #    the list of feature columns to add the column that
 #    specifies which brand of set each piece is from.
 #    Use the following code to do this:
@@ -215,15 +229,15 @@ for (prediction, expected) in zip(predictions, expected_y):
 #    set each piece is from?
 #
 #    After you make this change, the code in the 
-#    **Making predictions** section will fail unless
+#    **6. Make predictions** section will fail unless
 #    you also add the `set` feature to the `predict_x`
 #    dictionary:
 #    ```python
 #    'set': ['A', 'A', 'A', 'A', 'A', 'A'],
 #    ```
 #
-# 3. In the **TensorFlow setup** section and the
-#    **Specifying the model** section, modify 
+# 3. In the sections *2. Prepare data*, 
+#    *3. Specify model*, and *4. Train model*, modify 
 #    `BATCH_SIZE`, `TRAIN_STEPS`, the number of
 #    hidden layers, and the number of nodes in the
 #    hidden layers to try to improve the accuracy of

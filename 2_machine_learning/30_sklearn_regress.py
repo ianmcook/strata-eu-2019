@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # scikit-learn regression models
+# # Linear regression model with scikit-learn
 
 # This example demonstrates a simple regression modeling
 # task using the using the
@@ -22,7 +22,7 @@
 # module.
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Import the required modules
 import numpy as np
@@ -31,11 +31,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
+
+# ## 1. Load data
+
 # Load data representing one brand of chess set ("set A")
 chess = pd.read_csv('data/chess/one_chess_set.csv')
 
 # View the data
 chess
+
+
+# ## 2. Prepare data
 
 # Split the data into an 80% training set and a 20%
 # evaluation (test) set, using scikit-learn's 
@@ -51,20 +57,20 @@ test_x = test.filter(['base_diameter'])
 test_y = test.weight
 
 
-# ## scikit-learn setup
+# ## 3. Specify model
 
 # Create the linear regression model object ("estimator")
 # by calling the `LinearRegression` function
 model = LinearRegression()
 
 
-# ## Training the model
+# ## 4. Train model
 
 # Call the `fit` method to train the model
 model.fit(train_x, train_y)
 
 
-# ## Evaluating the trained model
+# ## 5. Evaluate model
 
 # Call the `score` method to compute the coefficient of
 # of determination (R-squared) on the test set. This is 
@@ -82,7 +88,7 @@ test_pred = model.predict(test_x)
 plt.scatter(test_x, test_y); plt.plot(test_x, test_pred)
 
 
-# ## Interpreting the model
+# ## 6(a). Interpret the model
 
 # Print the coefficient (slope) of the linear regression
 # model
@@ -92,7 +98,7 @@ model.coef_
 model.intercept_
 
 
-# ## Making predictions on new data
+# ## 6(b). Make predictions
 
 # See what predictions the trained model generates for
 # six new rows of data (feature only)

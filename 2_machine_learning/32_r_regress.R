@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # R regression models
+# # Regression models with R
 
 # This example demonstrates a simple linear regression
 # modeling task, first using R's built-in `lm()` function
@@ -21,17 +21,23 @@
 # package.
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Load the required packages
 library(readr)
 library(rpart)
+
+
+# ## 1. Load data
 
 # Load data representing one brand of chess set ("set A")
 chess <- read_csv("data/chess/one_chess_set.csv")
 
 # View the data
 chess
+
+
+# ## 2. Prepare data
 
 # Split the data into an 80% training set and a 20%
 # evaluation (test) set
@@ -44,7 +50,7 @@ chess_train <- chess[indices, ]
 chess_test  <- chess[-indices, ]
 
 
-# ## Specifying and training the model
+# ## 3 and 4. Specify and train model
 
 # In R, you do not need to instantiate an estimator 
 # object before training a model. Instead, you train

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # caret regression models
+# # Regression model with caret
 
 # This example demonstrates a simple linear regression
 # modeling task using the 
@@ -42,7 +42,7 @@ chess_train <- chess[indices, ]
 chess_test  <- chess[-indices, ]
 
 
-# ## Specifying and training the model
+# ## 3 and 4. Specify and train model
 
 # To create and train a model using the caret package,
 # you call the `train()` function. The basic syntax and
@@ -58,7 +58,7 @@ model <- train(
 )
 
 
-# ## Evaluating the trained model
+# ## 5. Evaluate model
 
 # To evaluate the model, first you use the model to 
 # generate predictions for the test (evaulation) set
@@ -81,7 +81,7 @@ test_pred <- predict(model, newdata = chess_test)
 R2(test_pred, chess_test$weight)
 
 
-# ## Making predictions on new data
+# ## 6. Make predictions
 
 # See what predictions the trained model generates for
 # six new rows of data (predictor variables only)

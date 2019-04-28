@@ -18,7 +18,7 @@
 # file `cnnmodel.py` to a simple image classification 
 # task.
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Import the required modules
 import os, random, math, subprocess
@@ -30,6 +30,9 @@ from IPython.display import Image, display
 import sys
 sys.path.append('2_machine_learning')
 from cnnmodel import cnn_model_fn
+
+
+# ## 1. Load data
 
 # Specify the unique labels (names of the chess pieces)
 chess_pieces = ['King', 'Queen', 'Rook', 'Bishop', 'Knight', 'Pawn']
@@ -58,6 +61,9 @@ for chess_set in chess_sets:
 for path, label in zip(x, y):
   print((path, label))
 
+
+# ## 2. Prepare data
+
 # Split the paths and labels into 80% training, 20% test
 train_frac = 0.8
 train_n = int(math.floor(train_frac * len(x)))
@@ -79,12 +85,9 @@ encoder = LabelEncoder()
 train_y_encoded = encoder.fit_transform(train_y)
 test_y_encoded = encoder.transform(test_y)
 
-
-# ## TensorFlow setup
-
-# Set constants for TensorFlow
+# TensorFlow processes records in batches. Set the
+# batch size:
 BATCH_SIZE = 100
-TRAIN_STEPS = 500
 
 # Define a function that reads an image from a file,
 # decodes it to numbers, and returns a two-element tuple 
@@ -111,7 +114,7 @@ def test_input_fn():
   return dataset
 
 
-# ## Specifying the model
+# ## 3. Specify model
 
 # Create a list with the feature column
 my_feature_columns = [
@@ -128,13 +131,24 @@ model = tf.estimator.Estimator(
 )
 
 
-# ## Training and evaluating the model
+# ## 4. Train model
+
+# TensorFlow trains the model in multiple steps
+# (iterations). In each step, the model learns
+# from one batch of training data. You can specify
+# the number of training steps that TensorFlow should
+# perform before it stops the iterative training
+# process.
+TRAIN_STEPS = 500
 
 # Call the `train` method to train the model
 model.train(
   input_fn=train_input_fn,
   steps=TRAIN_STEPS
 )
+
+
+# ## 5. Evaluate model
 
 # Call the `evaluate` method to evaluate (test) the
 # trained model
@@ -146,7 +160,7 @@ eval_result = model.evaluate(
 print(eval_result)
 
 
-# ## Making predictions
+# ## 6. Make predictions
 
 # Use the trained model to generate predictions
 # on unlabeled images

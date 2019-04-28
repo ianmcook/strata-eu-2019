@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # Spark MLlib regression model
+# # Regression model with Spark MLlib
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Import the required modules
 from pyspark.sql import SparkSession
@@ -30,15 +30,16 @@ from pyspark.ml.regression import RandomForestRegressor
 # Start a Spark session
 spark = SparkSession.builder.master('local').getOrCreate()
 
-# Load the data
+
+# ## 1. Load data
+
 chess = spark.table('chess.one_chess_set')
 
 # Display a subset of rows from the Spark DataFrame
 chess.show()
 
 
-
-# ## Preparing features
+# ## 2. Prepare data
 
 # Create a new DataFrame named `selected` with only the
 # columns that will be used in the model
@@ -57,17 +58,20 @@ assembled = assembler.transform(selected)
 (train, test) = assembled.randomSplit([0.8, 0.2], 12345)
 
 
-# ## Specifying and training the model
+# ## 3. Specify model
 
-# instantiate the Spark MLlib linear regression estimator
+# Instantiate the Spark MLlib linear regression estimator
 lr = LinearRegression(featuresCol="features", labelCol="weight")
+
+
+# ## 4. Train model
 
 # Call the `fit` method to fit (train) the linear regression
 # model
 lr_model = lr.fit(train)
 
 
-# ## Evaluating the trained model
+# ## 5. Evaluate model
 
 # Generate predictions on the test set
 test_with_predictions = lr_model.transform(test)
@@ -79,7 +83,7 @@ evaluator = RegressionEvaluator(predictionCol="prediction", labelCol="weight", m
 evaluator.evaluate(test_with_predictions)
 
 
-# ## Interpreting the model
+# ## 6(a). Interpret the model
 
 # Print the coefficient (slope) of the linear regression
 # model
@@ -87,6 +91,13 @@ lr_model.coefficients
 
 # Print the intercept  of the linear regression model
 lr_model.intercept
+
+
+# ## 6(b). Make predictions
+
+# You can also make predictions on new unlabeled data
+# using the `transform` method of the trained model as 
+# demonstrated above.
 
 
 # ## Other available regression models
@@ -118,7 +129,7 @@ encoded = encoder.transform(indexed)
 selected = encoded.select('base_diameter', 'height', 'set_cd', 'weight')
 feature_columns = ['base_diameter', 'height', 'set_cd']
 
-# we must assemble the features into a single column of vectors:
+# We must assemble the features into a single column of vectors:
 assembler = VectorAssembler(inputCols=feature_columns, outputCol="features")
 assembled = assembler.transform(selected)
 

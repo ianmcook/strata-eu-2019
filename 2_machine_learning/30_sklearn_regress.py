@@ -92,7 +92,7 @@ plt.scatter(test_x, test_y); plt.plot(test_x, test_pred)
 
 # Print the coefficient (slope) of the linear regression
 # model
-model.coef_
+model.coef_[0]
 
 # Print the intercept  of the linear regression model
 model.intercept_

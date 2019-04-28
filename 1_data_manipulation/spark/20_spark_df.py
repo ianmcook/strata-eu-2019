@@ -25,7 +25,7 @@ spark = SparkSession.builder.master('local').getOrCreate()
 flights = spark.table('flights')
 
 # Display a subset of rows from the Spark DataFrame
-flights
+flights.show()
 
 # Use Spark DataFrame methods to perform operations on the
 # DataFrame and return a pointer to the result DataFrame

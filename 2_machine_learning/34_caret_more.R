@@ -23,8 +23,9 @@
 # You can filter the data frame returned by 
 # `modelLookup()` to show only the models that can be
 # used for regression tasks.
-modelLookup() %>% filter(forReg)
-
+#```r
+#modelLookup() %>% filter(forReg)
+#```
 
 # ## Random forest model with scikit-learn
 

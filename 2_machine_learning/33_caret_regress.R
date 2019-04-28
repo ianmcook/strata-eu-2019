@@ -81,7 +81,14 @@ test_pred <- predict(model, newdata = chess_test)
 R2(test_pred, chess_test$weight)
 
 
-# ## 6. Make predictions
+# ## 6(a). Interpret the model
+
+# Print the coefficient (slope) and intercept of the
+# linear regression model
+model$finalModel$coefficients
+
+
+# ## 6(b). Make predictions
 
 # See what predictions the trained model generates for
 # six new rows of data (predictor variables only)

@@ -36,8 +36,6 @@ chess = spark.table('chess.one_chess_set')
 # Display a subset of rows from the Spark DataFrame
 chess.show()
 
-# Return the data as a pandas DataFrame
-chess.toPandas()
 
 
 # ## Preparing features

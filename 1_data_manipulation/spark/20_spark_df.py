@@ -39,8 +39,12 @@ flights \
   .orderBy('avg_dep_delay') \
   .show()
 
-# In this case, the full result DataFrame is printed to the
+# In this case, the _full_ result DataFrame is printed to the
 # screen because it's so small
+
+# You can also assign the result to a variable (a new Spark 
+# DataFrame) or return it as a pandas DataFrame by calling the
+# `toPandas` method
 
 # End the Spark session
 spark.stop()

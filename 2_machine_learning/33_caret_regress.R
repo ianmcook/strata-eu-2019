@@ -93,7 +93,7 @@ model$finalModel$coefficients
 # See what predictions the trained model generates for
 # six new rows of data (predictor variables only)
 new_data <- tibble(
-  base_diameter = c(27.3, 32.7, 30.1, 32.1, 35.9, 37.4),
+  base_diameter = c(27.3, 32.7, 31, 32.1, 35.9, 37.4),
   height = c(45.7, 58.1, 65.2, 46.3, 75.6, 95.4)
 )
 

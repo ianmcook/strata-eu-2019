@@ -82,7 +82,8 @@ test_y = [y[i] for i in test_indices]
 # cannot accept a label vocabulary.
 from sklearn.preprocessing import LabelEncoder
 encoder = LabelEncoder()
-train_y_encoded = encoder.fit_transform(train_y)
+encoder.fit(chess_pieces) # this modifies encoder in place
+train_y_encoded = encoder.transform(train_y)
 test_y_encoded = encoder.transform(test_y)
 
 # TensorFlow processes records in batches. Set the

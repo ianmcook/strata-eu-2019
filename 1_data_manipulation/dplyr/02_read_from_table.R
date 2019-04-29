@@ -37,4 +37,4 @@ games
 
 # View the data as a tibble
 library(tibble)
-as.tibble(games)
+as_tibble(games)

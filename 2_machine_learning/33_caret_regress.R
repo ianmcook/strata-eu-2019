@@ -14,22 +14,27 @@
 
 # # Regression model with caret
 
-# This example demonstrates a simple linear regression
-# modeling task using the 
+# This example demonstrates a simple regression modeling
+# task using the `lm` method with the
 # [caret](http://topepo.github.io/caret/index.html)
-# package, first for a simple linear regression model,
-# then for a random forest model.
+# package.
 
 
-# ## Preparation
+# ## 0. Preliminaries
 
 # Load the required packages
 library(readr)
 library(dplyr)
 library(caret)
 
+
+# ## 1. Load data
+
 # Load data representing one brand of chess set ("set A")
 chess <- read_csv("data/chess/one_chess_set.csv")
+
+
+# ## 2. Prepare data
 
 # Split the data into an 80% training set and a 20%
 # evaluation (test) set

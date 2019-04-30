@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # Regression model with caret
+# # Linear regression model with caret
 
 # This example demonstrates a simple regression modeling
 # task using the `lm` method with the
